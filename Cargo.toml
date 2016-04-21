@@ -1,0 +1,6 @@
+[package]
+name = "spotify_backup"
+version = "0.1.0"
+authors = ["Jordan Elver <jordan.elver@gmail.com>"]
+
+[dependencies]
