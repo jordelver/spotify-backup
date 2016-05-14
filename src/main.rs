@@ -1,11 +1,23 @@
 extern crate hyper;
+extern crate rustc_serialize;
 
 use std::env;
 use std::io::Read;
 use hyper::Client;
 use hyper::header::{Headers, Authorization, Bearer, ContentType};
+use rustc_serialize::json;
 
 static PLAYLIST_URL: &'static str = "https://api.spotify.com/v1/me/playlists";
+
+#[derive(RustcDecodable, Debug)]
+struct Playlists {
+    items: Vec<Playlist>,
+}
+
+#[derive(RustcDecodable, Debug)]
+struct Playlist {
+    name: String,
+}
 
 fn main() {
     let oauth_token = match env::var("OAUTH_TOKEN") {
@@ -40,6 +52,7 @@ fn main() {
     let mut body = String::new();
     res.read_to_string(&mut body).unwrap();
 
-    println!("Response: {}", body);
+    let playlists: Playlists = json::decode(&mut body).unwrap();
+    println!("Playlists: {:?}", playlists);
 }
 
