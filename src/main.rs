@@ -51,6 +51,6 @@ fn main() {
     res.read_to_string(&mut body).unwrap();
 
     let playlists: Playlists = json::decode(&mut body).unwrap();
-    println!("Playlists: {:?}", playlists);
+    println!("{:?}", playlists);
 }
 
