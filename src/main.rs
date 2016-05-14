@@ -4,7 +4,6 @@ use std::env;
 use std::io::Read;
 use hyper::Client;
 use hyper::header::{Headers, Authorization, Bearer, ContentType};
-use hyper::mime::{Mime, TopLevel, SubLevel, Attr, Value};
 
 static PLAYLIST_URL: &'static str = "https://api.spotify.com/v1/me/playlists";
 
@@ -24,15 +23,7 @@ fn main() {
         )
     );
 
-    headers.set(
-      ContentType(
-        Mime(
-          TopLevel::Application,
-          SubLevel::Json,
-          vec![(Attr::Charset, Value::Utf8)]
-        )
-      )
-    );
+    headers.set(ContentType::json());
 
     println!("{}", headers);
 
