@@ -37,8 +37,6 @@ fn main() {
 
     headers.set(ContentType::json());
 
-    println!("{}", headers);
-
     // Create a request
     let client = Client::new();
     let mut res = match client.get(PLAYLIST_URL)
