@@ -7,7 +7,7 @@ use hyper::Client;
 use hyper::header::{Headers, Authorization, Bearer, ContentType};
 use rustc_serialize::json;
 
-static PLAYLIST_URL: &'static str = "https://api.spotify.com/v1/me/playlists";
+static PLAYLIST_URL: &'static str = "https://api.spotify.com/v1/me/playlists?limit=50&offset=0";
 
 #[derive(RustcDecodable, Debug)]
 struct Playlists {
