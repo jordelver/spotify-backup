@@ -26,6 +26,16 @@ fn main() {
       Err(_) => panic!("OAUTH_TOKEN environment variable must be set"),
     };
 
+    let body = get_playlists(oauth_token, PLAYLIST_URL);
+
+    let playlists: Playlists = json::decode(&body).unwrap();
+
+    for entry in playlists.items.iter() {
+        println!("{}", entry.name);
+    }
+}
+
+fn get_playlists(oauth_token: String, url: &str) -> String {
     // Headers
     let mut headers = Headers::new();
     headers.set(
@@ -40,7 +50,7 @@ fn main() {
 
     // Create a request
     let client = Client::new();
-    let mut res = match client.get(PLAYLIST_URL)
+    let mut res = match client.get(url)
       .headers(headers)
       .send() {
         Ok(res) => res,
@@ -50,11 +60,6 @@ fn main() {
     // Read the response
     let mut body = String::new();
     res.read_to_string(&mut body).unwrap();
-
-    let playlists: Playlists = json::decode(&mut body).unwrap();
-
-    for entry in playlists.items.iter() {
-        println!("{}", entry.name);
-    }
+    body
 }
 
