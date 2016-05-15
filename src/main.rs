@@ -35,9 +35,10 @@ fn main() {
     }
 }
 
-fn get_playlists(oauth_token: String, url: &str) -> String {
-    // Headers
+fn request_headers(oauth_token: String) -> hyper::header::Headers {
     let mut headers = Headers::new();
+
+    // OAuth
     headers.set(
         Authorization(
             Bearer {
@@ -46,12 +47,18 @@ fn get_playlists(oauth_token: String, url: &str) -> String {
         )
     );
 
+    // JSON
     headers.set(ContentType::json());
+
+    headers
+}
+
+fn get_playlists(oauth_token: String, url: &str) -> String {
 
     // Create a request
     let client = Client::new();
     let mut res = match client.get(url)
-      .headers(headers)
+      .headers(request_headers(oauth_token))
       .send() {
         Ok(res) => res,
         Err(_) => panic!("Whoops."),
