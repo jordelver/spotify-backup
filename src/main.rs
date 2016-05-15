@@ -12,6 +12,7 @@ static PLAYLIST_URL: &'static str = "https://api.spotify.com/v1/me/playlists?lim
 #[derive(RustcDecodable, Debug)]
 struct Playlists {
     items: Vec<Playlist>,
+    next: String,
 }
 
 #[derive(RustcDecodable, Debug)]
